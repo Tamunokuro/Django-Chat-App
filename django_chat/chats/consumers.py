@@ -17,4 +17,5 @@ class ChatConsumer(JsonWebsocketConsumer):
         return super().disconnect(code)
     
     def receive_json(self, content, **kwargs):
+        print(content)
         return super().receive_json(content, **kwargs)
