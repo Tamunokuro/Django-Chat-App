@@ -1,12 +1,13 @@
-import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import { Chat } from "./components/Chat";
-import { Login } from "./components/Login";
-import { Navbar } from "./components/Navbar";
+import { Chat } from './components/Chat';
+import { Login } from './components/Login';
+import { Navbar } from './components/Navbar';
 
 // imports
-import { AuthContextProvider } from "./contexts/AuthContext";
+import { AuthContextProvider } from './contexts/AuthContext';
+import { ProtectedRoute } from './components/ProctetedRoutes';
 
 export default function App() {
   return (
@@ -20,7 +21,14 @@ export default function App() {
             </AuthContextProvider>
           }
         >
-          <Route path="" element={<Chat />} />
+          <Route
+            path="chats/"
+            element={
+              <ProtectedRoute>
+                <Chat />
+              </ProtectedRoute>
+            }
+          />
           <Route path="login" element={<Login />} />
         </Route>
       </Routes>
