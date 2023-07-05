@@ -1,42 +1,42 @@
-import React, { useState } from "react";
-import useWebSocket, { ReadyState } from "react-use-websocket";
+import React, { useState } from 'react';
+import useWebSocket, { ReadyState } from 'react-use-websocket';
 
-export function Chat(){
-  const [welcomeMessage, setWelcomeMessage] = useState("");
+export function Chat() {
+  const [welcomeMessage, setWelcomeMessage] = useState('');
   const [messageHistory, setMessageHistory] = useState([]);
-  const [message, setMessage] = useState("");
-  const [name, setName] = useState("");
+  const [message, setMessage] = useState('');
+  const [name, setName] = useState('');
 
-  const { readyState, sendJsonMessage } = useWebSocket("ws://127.0.0.1:8000/", {
+  const { readyState, sendJsonMessage } = useWebSocket('ws://127.0.0.1:8000/', {
     onOpen: () => {
-      console.log("Connected!");
+      console.log('Connected!');
     },
     onClose: () => {
-      console.log("Disconnected!");
+      console.log('Disconnected!');
     },
     // onMessage handler
     onMessage: (e) => {
       const data = JSON.parse(e.data);
       switch (data.type) {
-        case "welcome_message":
+        case 'welcome_message':
           setWelcomeMessage(data.message);
           break;
-        case "chat_message_echo":
+        case 'chat_message_echo':
           setMessageHistory((prev) => prev.concat(data));
           break;
         default:
-          console.error("Unknown message type!");
+          console.error('Unknown message type!');
           break;
       }
-    }
+    },
   });
 
   const connectionStatus = {
-    [ReadyState.CONNECTING]: "Connecting",
-    [ReadyState.OPEN]: "Open",
-    [ReadyState.CLOSING]: "Closing",
-    [ReadyState.CLOSED]: "Closed",
-    [ReadyState.UNINSTANTIATED]: "Uninstantiated"
+    [ReadyState.CONNECTING]: 'Connecting',
+    [ReadyState.OPEN]: 'Open',
+    [ReadyState.CLOSING]: 'Closing',
+    [ReadyState.CLOSED]: 'Closed',
+    [ReadyState.UNINSTANTIATED]: 'Uninstantiated',
   }[readyState];
 
   function handleChangeMessage(e: any) {
@@ -49,12 +49,12 @@ export function Chat(){
 
   const handleSubmit = () => {
     sendJsonMessage({
-      type: "chat_message",
+      type: 'chat_message',
       message,
-      name
+      name,
     });
-    setName("");
-    setMessage("");
+    setName('');
+    setMessage('');
   };
 
   return (
@@ -75,7 +75,10 @@ export function Chat(){
         value={message}
         className="ml-2 shadow-sm sm:text-sm border-gray-300 bg-gray-100 rounded-md py-3 px-3"
       />
-      <button className="ml-3 bg-gray-300 px-3 py-1 my-3" onClick={handleSubmit}>
+      <button
+        className="ml-3 bg-gray-300 px-3 py-1 my-3"
+        onClick={handleSubmit}
+      >
         Submit
       </button>
       <hr />

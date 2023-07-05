@@ -1,16 +1,16 @@
-import axios, { AxiosInstance, AxiosRequestHeaders } from "axios";
-import React, { createContext, ReactNode, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import axios, { AxiosInstance, AxiosRequestHeaders } from 'axios';
+import React, { createContext, ReactNode, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { UserModel } from "../models/User";
-import authHeader from "../services/AuthHeader";
-import AuthService from "../services/AuthService";
+import { UserModel } from '../models/User';
+import authHeader from '../services/AuthHeader';
+import AuthService from '../services/AuthService';
 
 const DefaultProps = {
   login: () => null,
   logout: () => null,
   authAxios: axios,
-  user: null
+  user: null,
 };
 
 export interface AuthProps {
@@ -22,7 +22,9 @@ export interface AuthProps {
 
 export const AuthContext = createContext<AuthProps>(DefaultProps);
 
-export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const navigate = useNavigate();
   const [user, setUser] = useState(() => AuthService.getCurrentUser());
 
@@ -35,7 +37,7 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({ childre
   function logout() {
     AuthService.logout();
     setUser(null);
-    navigate("/login");
+    navigate('/login');
   }
 
   // axios instance for making requests
@@ -57,7 +59,7 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({ childre
         logout();
       }
       return Promise.reject(error);
-    }
+    },
   );
 
   return (
