@@ -4,9 +4,9 @@ from .base import env
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
-DEBUG=True
+DEBUG = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
-SECRET_KEY=env(
+SECRET_KEY = env(
     "DJANGO_SECRET_KEY",
     default="XBfqONObJlD2V8tqSWX4QvW8GkQlXbwYwFkIm7aUKY1gvyeOBZ3ME2IcT2PzVExw",
 )

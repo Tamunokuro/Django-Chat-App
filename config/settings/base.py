@@ -82,7 +82,7 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "corsheaders",
-    "drf_spectacular"
+    "drf_spectacular",
 ]
 
 LOCAL_APPS = [
@@ -339,7 +339,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [('127.0.0.1', 6379)],
+            "hosts": [("127.0.0.1", 6379)],
         },
     },
 }
