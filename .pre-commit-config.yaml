@@ -23,6 +23,7 @@ repos:
       - id: prettier
         args: ['--tab-width', '2', '--single-quote']
         exclude: 'django_chat/templates/'
+        files: \.(js|ts|jsx|tsx|css|less|html|json|markdown|md|yaml|yml)$
 
   - repo: https://github.com/adamchainz/django-upgrade
     rev: '1.14.0'
@@ -45,11 +46,13 @@ repos:
     rev: 5.12.0
     hooks:
       - id: isort
+        args: [--profile=black]
 
   - repo: https://github.com/PyCQA/flake8
     rev: 6.0.0
     hooks:
       - id: flake8
+        args: ['--config=setup.cfg']
 
 # sets up .pre-commit-ci.yaml to ensure pre-commit dependencies stay up to date
 ci:

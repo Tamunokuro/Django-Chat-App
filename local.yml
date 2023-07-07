@@ -55,7 +55,7 @@ services:
     image: redis:6
     container_name: django_chat_local_redis
     ports:
-      - "6379:6379"
+      - '6379:6379'
 
   celeryworker:
     <<: *django

@@ -12,11 +12,7 @@ from django.utils.translation import gettext_lazy as _
 from django_chat.users.forms import UserAdminChangeForm
 from django_chat.users.models import User
 from django_chat.users.tests.factories import UserFactory
-from django_chat.users.views import (
-    UserRedirectView,
-    UserUpdateView,
-    user_detail_view,
-)
+from django_chat.users.views import UserRedirectView, UserUpdateView, user_detail_view
 
 pytestmark = pytest.mark.django_db
 

@@ -1,7 +1,6 @@
-import React, { useContext }  from "react";
-import { Link, Outlet } from "react-router-dom";
-import { AuthContext } from "../contexts/AuthContext";
-
+import React, { useContext } from 'react';
+import { Link, Outlet } from 'react-router-dom';
+import { AuthContext } from '../contexts/AuthContext';
 
 export function Navbar() {
   const { user, logout } = useContext(AuthContext);
@@ -59,22 +58,26 @@ export function Navbar() {
                   Chats
                 </Link>
               </li>
-                {
-                !user ? (
-                  <li>
-                    <Link to="/login" className="block py-2 pr-4 pl-3 text-white md:p-0 dark:text-white">
-                      Login
-                    </Link>
-                  </li>
-                ) : (
-                  <>
-                    <span className="text-white">Logged in: {user.username}</span>
-                    <button className="block py-2 pr-4 pl-3 text-white md:p-0 dark:text-white" onClick={logout}>
-                      Logout
-                    </button>
-                  </>
-                )
-              }
+              {!user ? (
+                <li>
+                  <Link
+                    to="/login"
+                    className="block py-2 pr-4 pl-3 text-white md:p-0 dark:text-white"
+                  >
+                    Login
+                  </Link>
+                </li>
+              ) : (
+                <>
+                  <span className="text-white">Logged in: {user.username}</span>
+                  <button
+                    className="block py-2 pr-4 pl-3 text-white md:p-0 dark:text-white"
+                    onClick={logout}
+                  >
+                    Logout
+                  </button>
+                </>
+              )}
             </ul>
           </div>
         </div>
