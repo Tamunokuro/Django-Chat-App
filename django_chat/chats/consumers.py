@@ -37,18 +37,39 @@ class ChatConsumer(JsonWebsocketConsumer):
 
         # accept connection
         async_to_sync(self.channel_layer.group_add)(self.chat_name, self.channel_name)
+
+        self.send_json(
+            {
+                "type": "online_user",
+                "users": [user.username for user in self.chat.online.all()],
+            }
+        )
+
+        async_to_sync(self.channel_layer.group_send)(
+            self.chat_name,
+            {"type": "user_joined", "user": self.user.username},
+        )
+
+        self.chat.online.add(self.user)
         # send json message
         self.send_json({"type": "chat", "text": "Welcome to the chat room!"})
         messages = self.chat.messages.all().order_by("-timestamp")[0:50]
+        message_count = self.chat.messages.all().count()
         self.send_json(
             {
                 "type": "last_50_messages",
                 "messages": MessageSerializer(messages, many=True).data,
+                "has_more": message_count > 50,
             }
         )
 
     def disconnect(self, code):
         print("Disconnected")
+        if self.user.is_authenticated:
+            async_to_sync(self.channel_layer.group_send)(
+                self.chat_name, {"type": "user_left", "user": self.user.username}
+            )
+            self.chat.online.remove(self.user)
         return super().disconnect(code)
 
     def get_receiver(self):
@@ -79,6 +100,12 @@ class ChatConsumer(JsonWebsocketConsumer):
 
     def chat_message_echo(self, event):
         print(event)
+        self.send_json(event)
+
+    def user_joined(self, event):
+        self.send_json(event)
+
+    def user_left(self, event):
         self.send_json(event)
 
     @classmethod
